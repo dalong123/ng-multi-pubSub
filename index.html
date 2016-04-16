@@ -1,0 +1,41 @@
+<html>
+<head>
+  <title>Test for PubSub</title>
+  <script src="./bower_components/angular/angular.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./NgPubSub.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    angular.module('test', ['ng-PubSub']).controller('myController', function ($scope, $log, NgPubSub) {
+      var testPubSub = NgPubSub('test');
+
+      var evtManager = testPubSub.on('evt', function (evt, param) {
+        $log.log('normal', param);
+      });
+      
+      $scope.click = function () {
+        // $log.log('ciao', NgPubSub('test') === testPubSub, NgPubSub('test2') === testPubSub);
+        testPubSub.publish('evt', new Date().getDate());
+        // $log.log(listener);
+        // evtManager.clear();
+      };
+
+      var evtManagerOnce = testPubSub.once('evt-once', function (evt, param) {
+        $log.log('once', param);
+      });
+
+      $scope.clear = function () {
+        // $log.log(evtManager.clear());
+        $log.log(testPubSub.off(evtManager));
+      };
+
+      $scope.evtOnce = function () {
+        testPubSub.publish('evt-once', new Date().getDate());
+      };
+    });
+  </script>
+</head>
+<body ng-app="test" ng-controller="myController">
+  <button type="button" ng-click="click()">test</button>
+  <button type="button" ng-click="evtOnce()">test once</button>
+  <button type="button" ng-click="clear()">clear</button>
+</body>
+</html>

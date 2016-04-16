@@ -1,0 +1,11 @@
+{
+  "spec_dir": "spec",
+  "spec_files": [
+    "../bower_components/angular/angular.js",
+    "../../test/*[sS]pec.js",
+    "../../NgPubSub.js"
+  ],
+  "helpers": [
+    "helpers/**/*.js"
+  ]
+}
